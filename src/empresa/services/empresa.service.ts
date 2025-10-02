@@ -14,12 +14,23 @@ export class EmpresaService {
   ) {}
 
   async findAll(): Promise<Empresa[]> {
-    return await this.empresaRepository.find();
+    return await this.empresaRepository.find({
+      relations: {
+        categoria: true,
+        usuario: true
+      }
+    });
   }
 
   async findById(id: number): Promise<Empresa> {
     const empresa = await this.empresaRepository.findOne({
-      where: { id },
+      where: { 
+        id 
+      },
+      relations: {
+        categoria: true,
+        usuario: true
+      }
     });
 
     if (!empresa) {
@@ -35,6 +46,10 @@ export class EmpresaService {
         nome_empresa: ILike(`%${nome_empresa}%`)
 
        },
+      relations: {
+        categoria: true,
+        usuario: true
+      }
     });
   }
 async create(empresa: Empresa): Promise<Empresa> {
