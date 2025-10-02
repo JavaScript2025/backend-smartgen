@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 import { EmpresaService } from "../services/empresa.service";
 import { Empresa } from "../entities/empresa.entity";
 
@@ -34,5 +34,10 @@ create(@Body() empresa: Empresa): Promise<Empresa> {
 @HttpCode(HttpStatus.OK)
 update(@Body() empresa: Empresa): Promise<Empresa> {
   return this.empresaService.update(empresa);
+}
+@Delete('/:id')
+@HttpCode(HttpStatus.NO_CONTENT)
+delete(@Param('id', ParseIntPipe)id: number){
+    return this.empresaService.delete(id);
 }
 }

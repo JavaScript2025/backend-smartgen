@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { InjectRepository } from "@nestjs/typeorm";
 import { Empresa } from "../entities/empresa.entity";
-import { ILike, Repository } from "typeorm";
+import { DeleteResult, ILike, Repository } from "typeorm";
 import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 
 @Injectable()
@@ -42,5 +42,10 @@ async create(empresa: Empresa): Promise<Empresa> {
     await this.findById (empresa.id)
 
     return await this.empresaRepository.save(empresa);
+  }
+  async delete (id: number): Promise<DeleteResult>{
+    await this.findById(id)
+
+    return await this.empresaRepository.delete(id)
   }
 }
