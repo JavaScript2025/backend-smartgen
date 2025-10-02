@@ -38,4 +38,9 @@ export class EmpresaService {
 async create(empresa: Empresa): Promise<Empresa> {
     return await this.empresaRepository.save(empresa);
   }
+  async update(empresa: Empresa): Promise<Empresa>{
+    await this.findById (empresa.id)
+
+    return await this.empresaRepository.save(empresa);
+  }
 }
