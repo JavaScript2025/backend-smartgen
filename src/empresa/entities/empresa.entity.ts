@@ -1,5 +1,8 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { IsNotEmpty } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Categoria } from '../../categoria/entities/categoria.entity';
 
 @Entity({ name: 'tb_empresas' })
 export class Empresa {
@@ -21,4 +24,9 @@ export class Empresa {
   @IsNotEmpty()
   @Column({ length: 250, nullable: false })
   instagram: string;
+
+  @ManyToOne(()=> Categoria, (categoria) => categoria.empresa, {
+    onDelete: "CASCADE"
+  })
+  categoria: Categoria
 }

@@ -3,12 +3,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Empresa } from "../entities/empresa.entity";
 import { DeleteResult, ILike, Repository } from "typeorm";
 import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
+import { CategoriaService } from "../../categoria/services/categoria.service";
 
 @Injectable()
 export class EmpresaService {
   constructor(
     @InjectRepository(Empresa)
-    private readonly empresaRepository: Repository<Empresa>,
+    private empresaRepository: Repository<Empresa>,
+    private categoriaService: CategoriaService
   ) {}
 
   async findAll(): Promise<Empresa[]> {
@@ -36,11 +38,12 @@ export class EmpresaService {
     });
   }
 async create(empresa: Empresa): Promise<Empresa> {
+    await this.categoriaService.findById(empresa.categoria.id)
     return await this.empresaRepository.save(empresa);
   }
   async update(empresa: Empresa): Promise<Empresa>{
     await this.findById (empresa.id)
-
+    await this.categoriaService.findById(empresa.categoria.id)
     return await this.empresaRepository.save(empresa);
   }
   async delete (id: number): Promise<DeleteResult>{
@@ -48,4 +51,5 @@ async create(empresa: Empresa): Promise<Empresa> {
 
     return await this.empresaRepository.delete(id)
   }
+
 }
