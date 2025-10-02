@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { Empresa } from './empresa/entities/empresa.entity';
+import { EmpresaModule } from './empresa/empresa.module';
 
 @Module({
   imports: [
@@ -11,9 +12,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'root',
       password: 'root',
       database: 'db_smartgen',
-      entities: [],
+      entities: [Empresa],
       synchronize: true,
+      logging: true,
     }),
+    EmpresaModule,
   ],
   controllers: [],
   providers: [],
