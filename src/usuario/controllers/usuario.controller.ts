@@ -1,45 +1,61 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
-import { Usuario } from "../entities/usuario.entity";
-import { UsuarioService } from "../services/usuario.service";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { Usuario } from '../entities/usuario.entity';
+import { UsuarioService } from '../services/usuario.service';
 
-@Controller("/usuarios")
+@Controller('/usuarios')
 export class UsuarioController {
-    constructor(private readonly usuarioService: UsuarioService) {}
-   
-    @Get()
-    @HttpCode(HttpStatus.OK)
-    findAll(): Promise<Usuario[]> {
-        return this.usuarioService.findAll();
-    }
+  constructor(private readonly usuarioService: UsuarioService) {}
 
-    @Get('/:id')
-    @HttpCode(HttpStatus.OK)
-    FindById(@Param('id', ParseIntPipe) id: number): Promise<Usuario> {
-        return this.usuarioService.findById(id);
-    }
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  findAll(): Promise<Usuario[]> {
+    return this.usuarioService.findAll();
+  }
 
-    @Get('buscar/:usuario')
-    async findByUsuario(@Param('usuario') usuario: string): Promise<Usuario | null> {
-      return await this.usuarioService.findByUsuario(usuario);
-      
-    }
+  @Get('/:id')
+  @HttpCode(HttpStatus.OK)
+  FindById(@Param('id', ParseIntPipe) id: number): Promise<Usuario> {
+    return this.usuarioService.findById(id);
+  }
 
-    @Post()
-    @HttpCode(HttpStatus.CREATED)
-    create(@Body() usuario: Usuario): Promise<Usuario> {
-        return this.usuarioService.create(usuario);
-    }
+  @Get('buscar/:usuario')
+  async findByUsuario(
+    @Param('usuario') usuario: string,
+  ): Promise<Usuario | null> {
+    return await this.usuarioService.findByUsuario(usuario);
+  }
 
-    @Put()
-    @HttpCode(HttpStatus.OK)
-    update(@Body() usuario: Usuario): Promise<Usuario> {
-        return this.usuarioService.update(usuario);
-    }
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() usuario: Usuario): Promise<Usuario> {
+    return this.usuarioService.create(usuario);
+  }
 
-    @Delete('/:id')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    delete(@Param('id', ParseIntPipe) id: number){
-        return this.usuarioService.delete(id);
-    }
+  @Put()
+  @HttpCode(HttpStatus.OK)
+  update(@Body() usuario: Usuario): Promise<Usuario> {
+    return this.usuarioService.update(usuario);
+  }
 
+  @Delete('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.usuarioService.delete(id);
+  }
+
+  @Get(':id/imc')
+  async getImc(@Param('id', ParseIntPipe) id: number): Promise<object> {
+    return this.usuarioService.calcularImc(id);
+  }
 }
