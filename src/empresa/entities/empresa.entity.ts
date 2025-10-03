@@ -31,7 +31,7 @@ export class Empresa {
   })
   categoria: Categoria;
 
-  @ManyToOne(() => Usuario, (usuario) => usuario.empresas, {
+  @ManyToOne(() => Usuario, (usuario) => usuario.empresa, {
     onDelete: "CASCADE"
   })
   usuario: Usuario;

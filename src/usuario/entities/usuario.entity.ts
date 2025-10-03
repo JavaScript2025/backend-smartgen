@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IsEmail, IsNotEmpty, MinLength } from "class-validator"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Empresa } from "../../empresa/entities/empresa.entity"
@@ -25,6 +26,17 @@ export class Usuario {
     @Column({ length: 5000 }) 
     foto: string
 
-    @OneToMany(() => Empresa, (empresa) => empresa.usuario, { cascade: true })
-    empresas: Empresa[]
+    @Column({type: "float"})
+    altura: number
+
+    @Column({type: "float"})
+    peso: number
+
+    get imc(): number{
+        if(!this.altura || !this.peso) return 0;
+        return Number ((this.peso /(this.altura*this.altura)).toFixed(2));
+    }
+
+    @OneToMany(() => Empresa, (empresa) => empresa.usuario)
+    empresa: Empresa[]
 }

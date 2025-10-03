@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Empresa } from './empresa/entities/empresa.entity';
@@ -22,7 +23,7 @@ import { UsuarioModule } from './usuario/usuario.module';
     }),
     EmpresaModule,
     CategoriaModule,
-    UsuarioModule,
+    UsuarioModule
   ],
   controllers: [],
   providers: [],
