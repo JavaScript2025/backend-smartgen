@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, ILike, Repository } from 'typeorm';
 import { Usuario } from '../entities/usuario.entity';
 
 @Injectable()
@@ -11,10 +11,10 @@ export class UsuarioService {
         private usuarioRepository: Repository<Usuario>,
     ) { }
 
-    async findByUsuario(usuario: string): Promise<Usuario |null> {
+    async findByUsuario(usuario: string): Promise<Usuario | null> {
         return await this.usuarioRepository.findOne({
             where: {
-                usuario: usuario
+                usuario: ILike(`${usuario}`)
             }
         })
     }
@@ -63,6 +63,12 @@ export class UsuarioService {
         const usuarioAtualizado = await this.usuarioRepository.save(usuario);
     
         return usuarioAtualizado; 
+    }
+
+    async delete(id: number): Promise<DeleteResult> {
+        await this.findById(id);
+        
+        return await this.usuarioRepository.delete(id);
     }
     
 }
