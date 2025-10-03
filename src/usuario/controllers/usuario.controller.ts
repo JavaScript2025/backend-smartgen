@@ -21,6 +21,7 @@ export class UsuarioController {
     @Get('buscar/:usuario')
     async findByUsuario(@Param('usuario') usuario: string): Promise<Usuario | null> {
       return await this.usuarioService.findByUsuario(usuario);
+      
     }
 
     @Post()

@@ -19,25 +19,28 @@ export class EmpresaController {
   findById(@Param('id') id: number): Promise<Empresa> {
     return this.empresaService.findById(id);
   }
+
   @Get('/nome_empresa/:nome_empresa')
   @HttpCode(HttpStatus.OK)
   findAllByNome_Empresa(@Param('nome_empresa') nome_empresa: string): Promise<Empresa[]> {
     return this.empresaService.findAllByNome_Empresa(nome_empresa);
   }
-@Post()
-@HttpCode(HttpStatus.CREATED)
-create(@Body() empresa: Empresa): Promise<Empresa> {
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() empresa: Empresa): Promise<Empresa> {
   return this.empresaService.create(empresa);
 }
 
-@Put()
-@HttpCode(HttpStatus.OK)
-update(@Body() empresa: Empresa): Promise<Empresa> {
+  @Put()
+  @HttpCode(HttpStatus.OK)
+  update(@Body() empresa: Empresa): Promise<Empresa> {
   return this.empresaService.update(empresa);
 }
-@Delete('/:id')
-@HttpCode(HttpStatus.NO_CONTENT)
-delete(@Param('id', ParseIntPipe)id: number){
-    return this.empresaService.delete(id);
+
+  @Delete('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  delete(@Param('id', ParseIntPipe)id: number){
+  return this.empresaService.delete(id);
 }
 }
